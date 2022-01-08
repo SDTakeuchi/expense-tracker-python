@@ -29,4 +29,4 @@ class LargeCategory(models.Model):
         return self.name
 
     class Meta:
-        ordering = ('order_number')
+        ordering = ('order_number',)

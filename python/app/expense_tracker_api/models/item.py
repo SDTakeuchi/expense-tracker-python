@@ -3,7 +3,7 @@ from django.db import models
 from .small_category import SmallCategory
 from .user import CustomUser
 
-class LargeCategory(models.Model):
+class Item(models.Model):
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
@@ -37,7 +37,9 @@ class LargeCategory(models.Model):
     small_category = models.ForeignKey(
         SmallCategory,
         on_delete=models.SET_NULL,
-        related_name="linked_items"
+        related_name="linked_items",
+        null=True,
+        blank=True
     )
 
     user = models.ForeignKey(

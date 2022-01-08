@@ -1,5 +1,6 @@
 from pathlib import Path
 from decouple import config
+import dj_database_url
 import sentry_sdk
 
 sentry_sdk.init(
@@ -32,7 +33,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'expense_tracker_api.apps.ExpenseTrackerConfig',  # FIXME 
     'rest_framework',
     'django_filters',
     'expense_tracker_api',
@@ -73,14 +73,17 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('DBNAME'),
-        'USER': config('DBUSER'),
-        'PASSWORD': config('DBPASSWORD'),
-        'HOST': config('DBHOST'),
-        'PORT': config('DBPORT')
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': config('DBNAME'),
+    #     'USER': config('DBUSER'),
+    #     'PASSWORD': config('DBPASSWORD'),
+    #     'HOST': config('DBHOST'),
+    #     'PORT': config('DBPORT')
+    # }
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
 }
 
 
@@ -105,18 +108,10 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
 
 
@@ -131,7 +126,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-AUTH_USER_MODEL = 'expense_tracker_api.models.CustomUser'
+AUTH_USER_MODEL = 'expense_tracker_api.CustomUser'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
