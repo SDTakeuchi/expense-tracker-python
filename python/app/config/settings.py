@@ -1,3 +1,4 @@
+from datetime import timedelta
 from pathlib import Path
 from decouple import config, Csv
 import dj_database_url
@@ -36,6 +37,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'corsheaders',
+    'djoser',
     'expense_tracker_api',
 ]
 
@@ -52,10 +54,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'config.urls'
 
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-)
+CORS_ORIGIN_WHITELIST = config('CORS_ORIGIN_WHITELIST', cast=Csv())
 
 TEMPLATES = [
     {
@@ -80,14 +79,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': config('DBNAME'),
-    #     'USER': config('DBUSER'),
-    #     'PASSWORD': config('DBPASSWORD'),
-    #     'HOST': config('DBHOST'),
-    #     'PORT': config('DBPORT')
-    # }
     'default': dj_database_url.config(
         default=config('DATABASE_URL')
     )
@@ -105,10 +96,35 @@ CACHES = {
 }
 
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ],
+    'DEFAULT_AUTHENTION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
+    ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
 }
+
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT'),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60)
+}
+
+# LOGIN-REQUIRED-MIDDLEWARE
+# LOGIN_REQUIRED_IGNORE_PATHS = (
+#     r'/accounts.*/$',
+#     r'/api.*/$',
+#     r'/healthcheck.*/$',
+#     r'/product_file_upload_db.*/$',
+#     r'/preview.*$',
+#     r'^/product/image/receive_trim_notification_from_aws_lambda.*$',
+# )
+# LOGIN_REQUIRED_IGNORE_VIEW_NAMES = (
+#     'admin:login',
+#     'ecam_api:login',
+# )
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

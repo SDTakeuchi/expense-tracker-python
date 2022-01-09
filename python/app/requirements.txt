@@ -7,6 +7,7 @@ django-cors-headers
 django-filter
 django-redis
 djangorestframework>= 3.0, <=4.0
+djangorestframework_simplejwt
 djoser
 packaging
 psycopg2-binary
