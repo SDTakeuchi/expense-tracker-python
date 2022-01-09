@@ -3,9 +3,11 @@ certifi
 Deprecated
 dj-database-url
 Django>= 4.0, <=5.0
+django-cors-headers
 django-filter
 django-redis
 djangorestframework>= 3.0, <=4.0
+djoser
 packaging
 psycopg2-binary
 pyparsing

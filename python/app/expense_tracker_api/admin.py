@@ -1,3 +1,8 @@
 from django.contrib import admin
+from .models import *
 
-# Register your models here.
+
+admin.site.register(CustomUser)
+admin.site.register(LargeCategory)
+admin.site.register(SmallCategory)
+admin.site.register(Item)
