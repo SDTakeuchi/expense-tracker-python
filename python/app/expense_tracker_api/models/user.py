@@ -27,6 +27,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         default=timezone.now,
     )
 
+    is_staff = models.BooleanField(
+        default=False
+    )
+
+    is_active = models.BooleanField(
+        default=True
+    )
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     objects = CustomUserManager()
