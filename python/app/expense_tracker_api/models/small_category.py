@@ -1,6 +1,8 @@
 from django.db import models
+
 from .large_category import LargeCategory
 from .user import CustomUser
+
 
 class SmallCategory(models.Model):
     name = models.CharField(
