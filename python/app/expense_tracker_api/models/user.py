@@ -9,6 +9,11 @@ from .user_managers.managers import CustomUserManager
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['email',]
+    objects = CustomUserManager()
+
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
@@ -35,10 +40,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(
         default=True
     )
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
-    objects = CustomUserManager()
 
     def __str__(self):
         return self.email
