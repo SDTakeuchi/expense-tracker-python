@@ -1,0 +1,33 @@
+// get item list
+
+{
+    "user_id": "123e4567-e89b-12d3-a456-426614174000",
+    "item_id": "123e4567-e89b-12d3-a456-426614174000",
+    "purchase_date_from": "2015-12-31",
+    "purchase_date_to": "2016-12-31",
+    "large_category": "insureance",
+    "small_category": "insureance"
+}
+
+
+{   
+    "result": [
+        {
+            "id": "123e4567-e89b-12d3-a456-426614174000",
+            "name": "ポポラマーマ",
+            "purchase_date": "2016-12-31",
+            "large_category": "insureance",
+            "small_category": "insureance"
+        },
+        {
+            "id": "123e4567-e89b-12d3-a456-426614174000"
+            "name": "ポポラマーマ",
+            "purchase_date": "2016-12-31",
+            "large_category": "insureance",
+            "small_category": "insureance"
+        }
+    ],
+    "total_price": "¥48,000",
+    "purchase_date_from":"2015-12-31",
+    "purchase_date_to":"2016-12-31",
+}

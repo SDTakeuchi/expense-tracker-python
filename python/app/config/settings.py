@@ -1,15 +1,16 @@
+import os
 from datetime import timedelta
 from pathlib import Path
 from decouple import config, Csv
 import dj_database_url
 import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 sentry_sdk.init(
-    config('SENTRY_DSN'),
-    # Set traces_sample_rate to 1.0 to capture 100%
-    # of transactions for performance monitoring.
-    # We recommend adjusting this value in production.
-    traces_sample_rate=config('SENTRY_TRACE_SAMPLE_RATE', cast=float)
+    dsn=config('SENTRY_DSN'),
+    integrations=[DjangoIntegration()],
+    traces_sample_rate=config('SENTRY_TRACE_SAMPLE_RATE', cast=float),
+    send_default_pii=True,
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', cast=bool, default=False)
+DEBUG = ['*']
+# DEBUG = config('DEBUG', cast=bool, default=False)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
-
 
 # Application definition
 
@@ -50,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'login_required.middleware.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -94,6 +96,9 @@ CACHES = {
         }
     }
 }
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+CACHE_TTL = 60 * 1
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
@@ -112,14 +117,10 @@ SIMPLE_JWT = {
 }
 
 # LOGIN-REQUIRED-MIDDLEWARE
-# LOGIN_REQUIRED_IGNORE_PATHS = (
-#     r'/accounts.*/$',
-#     r'/api.*/$',
-#     r'/healthcheck.*/$',
-#     r'/product_file_upload_db.*/$',
-#     r'/preview.*$',
-#     r'^/product/image/receive_trim_notification_from_aws_lambda.*$',
-# )
+LOGIN_REQUIRED_IGNORE_PATHS = (
+    r'/accounts.*/$',
+    r'/api.*/$',
+)
 # LOGIN_REQUIRED_IGNORE_VIEW_NAMES = (
 #     'admin:login',
 #     'ecam_api:login',
@@ -150,10 +151,17 @@ USE_TZ = True
 
 AUTH_USER_MODEL = 'expense_tracker_api.CustomUser'
 
+FILE_UPLOAD_MAX_MEMORY_SIZE = config('FILE_UPLOAD_MAX_MEMORY_SIZE', cast=int)
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'static')
+STATICFILES_DIRS = [
+    '/app/src/static',
+    '/usr/local/lib/python3.10/site-packages/django/contrib/admin/static',
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
