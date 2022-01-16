@@ -2,12 +2,12 @@ asgiref
 certifi
 Deprecated
 dj-database-url
-Django>= 4.0, <=5.0
+Django>= 4.0, <5.0
 django-cors-headers
 django-filter
 django-login-required-middleware
 django-redis
-djangorestframework>= 3.0, <=4.0
+djangorestframework>= 3.0, <4.0
 djangorestframework_simplejwt
 djoser
 packaging
