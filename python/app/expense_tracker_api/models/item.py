@@ -1,15 +1,11 @@
-import uuid
 from django.db import models
+
+from .base_model import BaseModel
 from .small_category import SmallCategory
 from .user import CustomUser
 
-class Item(models.Model):
-    id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False
-    )
 
+class Item(BaseModel):
     name = models.CharField(
         max_length=255
     )
@@ -26,14 +22,6 @@ class Item(models.Model):
 
     purchase_date = models.DateTimeField()
 
-    date_created = models.DateTimeField(
-        auto_now_add=True
-    )
-
-    date_updated = models.DateTimeField(
-        auto_now=True
-    )
-
     small_category = models.ForeignKey(
         SmallCategory,
         on_delete=models.SET_NULL,
@@ -48,7 +36,7 @@ class Item(models.Model):
     )
 
     def __str__(self):
-        return self.name
+        return f'{self.name}({self.user}) - {self.purchase_date}'
 
     class Meta:
         ordering = ['-purchase_date']

@@ -1,5 +1,6 @@
 from django.db import models
 
+from .base_model import BaseModel
 from .large_category import LargeCategory
 from .user import CustomUser
 
