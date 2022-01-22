@@ -42,16 +42,17 @@ services:
         ports:
             - "80:80"
         depends_on:
-            - app
+            - frontend
     frontend:
         build: ./front_js
         container_name: front_js
         hostname: frontend
         volumes:
             - ./front_js/expense-tracker:/usr/src/app/expense-tracker
+            - /app/node_modules
+            - /app/.next
         tty: true
         environment:
-            # enables hot reload
             - CHOKIDAR_USEPOLLING=true
         ports:
             - "3000:3000"

@@ -11,7 +11,7 @@ from .user_managers.managers import CustomUserManager
 class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['email',]
+    REQUIRED_FIELDS = []
     objects = CustomUserManager()
 
     id = models.UUIDField(
