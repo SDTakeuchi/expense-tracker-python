@@ -2,7 +2,7 @@ class Checker:
     @staticmethod
     def is_empty(value):
         """
-        return True
+        returns True
         if value is any of
         None, '', [], {}
         """
@@ -11,8 +11,7 @@ class Checker:
     @staticmethod
     def is_not_empty(value):
         """
-        return False
-        if value is any of
-        None, '', [], {}
+        returns True
+        if value contains any value in it
         """
         return value is not None and value != '' and value != [] and value != {}

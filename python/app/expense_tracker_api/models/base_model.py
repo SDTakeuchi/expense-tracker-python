@@ -22,11 +22,14 @@ class BaseModel(models.Model):
 
     def get_or_none(self, **kwargs):
         """
-        return obj if matching query exists
+        returns obj if one matching query exists
         else returns None
+        if multiple objects are fecthed, wlil throw an error
         """
-        # maybe this has to be self.filter(kwargs).first()
-        return self.objects.filter(kwargs).first()
-
-    # def validate_same_value_exists(self, **kwargs):
-    #     for k, v in kwargs.items():
+        try:
+            return self.get_queryset().get(kwargs)
+        except self.model.DoesNotExist:
+            return None
+        except Exception as e:
+            raise e
+        
