@@ -1,0 +1,10 @@
+- model: expense_tracker_api.large_category
+  pk: null
+  fields:
+    first_name: John
+    last_name: Lennon
+- model: expense_tracker_api.large_category
+  pk: null
+  fields:
+    first_name: Paul
+    last_name: McCartney

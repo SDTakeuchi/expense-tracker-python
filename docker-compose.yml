@@ -43,19 +43,18 @@ services:
             - "80:80"
         depends_on:
             - app
-    # frontend:
-    #     build: ./material-kit-react-main
-    #     container_name: frontend_container_py_ver
-    #     hostname: frontend
-    #     volumes:
-    #         - ./material-kit-react-main/material-kit-react-main:/usr/src/app
-    #         # - ./frontend/personal_page:/usr/src/app
-    #     tty: true
-    #     environment:
-    #         # enables hot reload
-    #         - CHOKIDAR_USEPOLLING=true
-    #     ports:
-    #         - "3000:3000"
+    frontend:
+        build: ./front_js
+        container_name: front_js
+        hostname: frontend
+        volumes:
+            - ./front_js/expense-tracker:/usr/src/app/expense-tracker
+        tty: true
+        environment:
+            # enables hot reload
+            - CHOKIDAR_USEPOLLING=true
+        ports:
+            - "3000:3000"
 
 volumes:
     db_volume:
