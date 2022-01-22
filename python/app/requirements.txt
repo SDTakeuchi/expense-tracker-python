@@ -18,6 +18,7 @@ pytz
 redis
 sentry-sdk
 sqlparse
+tqdm
 urllib3
 uWSGI
 wrapt
