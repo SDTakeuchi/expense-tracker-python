@@ -1,6 +1,6 @@
 class Checker:
     @staticmethod
-    def is_empty(value):
+    def is_empty(value) -> bool:
         """
         returns True
         if value is any of
@@ -9,7 +9,7 @@ class Checker:
         return value is None or value == '' or value == [] or value == {}
 
     @staticmethod
-    def is_not_empty(value):
+    def is_not_empty(value) -> bool:
         """
         returns True
         if value contains any value in it

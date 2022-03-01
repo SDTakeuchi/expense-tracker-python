@@ -1,8 +1,19 @@
 class Formatter:
     @staticmethod
     def truncate(text, max_length, trailing_char='...'):
-        if not text or not max_length:
-            return 
+        if not isinstance(text, str):
+            raise Exception(
+                f'Formatter.truncate() received not-str first arg; type:{type(text)}'
+            )
         if text > max_length:
             return text[:max_length] + trailing_char
         return text
+
+    @staticmethod
+    def half_round_num(number, hide_extra_zero=False):
+        """
+        round numbers to nearest 0.5
+        """
+        num_rounded = round(number * 2) / 2
+        result_num = int(num_rounded) if hide_extra_zero is True and num_rounded % 1 == 0 else num_rounded
+        return result_num

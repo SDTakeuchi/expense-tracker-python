@@ -1,15 +1,9 @@
-import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Layout.module.css'
 
 export default function Home() {
   return (
     <div className={styles.container}>
-      <Head>
-        <title>支出がワカル君</title>
-        <meta name="description" content="best-ish expense tracker" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
