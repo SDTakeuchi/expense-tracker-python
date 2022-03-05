@@ -1,11 +1,11 @@
 package models
 
 import (
+	"app/lib"
 	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	null "gopkg.in/guregu/null.v4"
-	"app/domein/lib"
 	"net/http"
 	"time"
 )
@@ -43,16 +43,20 @@ func NewItem(
 	purchaseDate time.Time,
 	smallCategoryId uint,
 	userId uint) (*Item, error) {
+
 	if name == "" {
 		return nil, errors.New("項目名を入力してください")
 	}
+
 	now := time.Now()
-	id := GenUuid(Item)
+	id := lib.GenUuid()
 
 	item := &Item{
-		Id:              id,
-		CreatedAt:       now,
-		UpdatedAt:       now,
+		BaseModel: BaseModel{
+			Id:        id,
+			CreatedAt: now,
+			UpdatedAt: now,
+		},
 		Name:            name,
 		Memo:            memo,
 		Price:           price,
@@ -60,6 +64,7 @@ func NewItem(
 		SmallCategoryId: smallCategoryId,
 		UserId:          userId,
 	}
+
 	return item, nil
 }
 
@@ -69,9 +74,11 @@ func (i *Item) Set(
 	price int,
 	purchaseDate time.Time,
 	smallCategoryId uint) error {
+
 	if name == "" {
 		return errors.New("項目名を入力してください")
 	}
+
 	now := time.Now()
 
 	i.UpdatedAt = now
@@ -80,5 +87,6 @@ func (i *Item) Set(
 	i.Price = price
 	i.PurchaseDate = purchaseDate
 	i.SmallCategoryId = smallCategoryId
+
 	return nil
 }

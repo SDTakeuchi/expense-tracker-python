@@ -1,12 +1,16 @@
 class Formatter:
     @staticmethod
-    def truncate(text, max_length, trailing_char='...'):
+    def truncate(text, max_len, trailing_char='...'):
         if not isinstance(text, str):
             raise Exception(
                 f'Formatter.truncate() received not-str first arg; type:{type(text)}'
             )
-        if text > max_length:
-            return text[:max_length] + trailing_char
+        if not isinstance(max_len, int):
+            raise Exception(
+                f'Formatter.truncate() received not-int second arg; type:{type(max_len)}'
+            )
+        if text > max_len:
+            return text[:max_len] + trailing_char
         return text
 
     @staticmethod

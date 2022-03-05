@@ -1,31 +1,10 @@
 package models
 
 import (
-    "time"
     "net/http"
     "github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 )
-
-type BaseModel struct {
-	Id        string
-	CreatedAt time.Time
-	UpdatedAt time.Time
-}
-
-type models interface {
-	GenUuid()
-}
-
-func GenUuid(m model.BaseModel) (uuid string) {
-	for {
-		uuid = ksuid.New()
-		f, _ := m.FindByID(uuid)
-		if f == nil {
-			return 
-		}
-	}
-}
 
 var (
     db  *gorm.DB
