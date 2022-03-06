@@ -4,8 +4,6 @@ import (
 	"app/domein/models"
 	"app/domein/repository"
 	"github.com/jinzhu/gorm"
-	null "gopkg.in/guregu/null.v4"
-	"time"
 )
 
 type ItemRepository struct {
@@ -58,7 +56,7 @@ func (ir *ItemRepository) Get(iFil *models.ItemFilter) (items []*models.Item, er
 	}
 
 	if iFil.SmallCategoryId != "" {
-		q = q.Where("small_category_id = ?", iFil.SmallCategoryId)
+		q = q.Where("small_category_id IN ?", iFil.SmallCategoryId)
 	} 
 	// if iFil.LargeCategoryId != "" {
 	// 	q = q.Where("large_category_id = ?", iFil.LargeCategoryId)

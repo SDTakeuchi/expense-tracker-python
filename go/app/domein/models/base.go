@@ -1,11 +1,11 @@
 package models
 
 import (
-    "time"
+	"time"
 )
 
 type BaseModel struct {
-	ID        string
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	ID        string    `gorm:"primary_key" json:"id"`
+	CreatedAt time.Time `json: "created_at"`
+	UpdatedAt time.Time `json: "updated_at"`
 }

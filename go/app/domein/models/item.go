@@ -3,11 +3,8 @@ package models
 import (
 	"app/lib"
 	"errors"
-	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
-	null "gopkg.in/guregu/null.v4"
-	"net/http"
 	"time"
+	null "gopkg.in/guregu/null.v4"
 )
 
 type Item struct {
@@ -16,8 +13,10 @@ type Item struct {
 	Memo            string    `db:"memo" json:"memo"`
 	Price           int       `db:"price" json:"price"`
 	PurchaseDate    time.Time `db:"purchase_date" json:"purchase_date"`
-	SmallCategoryId uint      `db:"small_category_id" json:"small_category_id"`
-	UserId          uint      `db:"user_id" json:"user_id"`
+	SmallCategoryId string    `db:"small_category_id" json:"small_category_id"`
+	// SmallCategory SmallCategory
+	UserId string `db:"user_id" json:"user_id"`
+	// User User
 }
 
 type ItemFilter struct {
@@ -41,8 +40,7 @@ func NewItem(
 	name, memo string,
 	price int,
 	purchaseDate time.Time,
-	smallCategoryId uint,
-	userId uint) (*Item, error) {
+	smallCategoryId ,userId string) (*Item, error) {
 
 	if name == "" {
 		return nil, errors.New("項目名を入力してください")
@@ -53,7 +51,7 @@ func NewItem(
 
 	item := &Item{
 		BaseModel: BaseModel{
-			Id:        id,
+			ID:        id,
 			CreatedAt: now,
 			UpdatedAt: now,
 		},
@@ -73,7 +71,7 @@ func (i *Item) Set(
 	name, memo string,
 	price int,
 	purchaseDate time.Time,
-	smallCategoryId uint) error {
+	smallCategoryId string) error {
 
 	if name == "" {
 		return errors.New("項目名を入力してください")
